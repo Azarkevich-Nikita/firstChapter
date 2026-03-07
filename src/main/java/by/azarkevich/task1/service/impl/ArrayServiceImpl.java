@@ -4,6 +4,7 @@ import by.azarkevich.task1.exception.IntArrayException;
 import by.azarkevich.task1.service.ArrayService;
 
 public class ArrayServiceImpl implements ArrayService {
+
     @Override
     public int max(int[] array) throws IntArrayException {
         if(array == null || array.length == 0){
