@@ -11,13 +11,13 @@ public class ArrayValidatorImpl implements ArrayValidator {
     private static final Logger logger = LogManager.getLogger(ArrayValidator.class);
 
     @Override
-    public boolean isValid(String line) throws IntArrayException {
-        logger.info("isValid for IntArray called");
+    public boolean isElementValid(String line) throws IntArrayException {
+        logger.info("Function isElementValid for {" + line + "} called.");
 
         if (line == null || line.isBlank()) {
             return false;
         }
 
-        return line.matches("[-0-9;\\s]+");
+        return line.matches("^-?[0-9;\s]+$");
     }
 }

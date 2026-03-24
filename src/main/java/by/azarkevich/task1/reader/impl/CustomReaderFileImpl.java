@@ -18,7 +18,8 @@ public class CustomReaderFileImpl implements CustomReaderFile {
 
     @Override
     public List<String> readLines(String filePath) throws IntArrayException {
-        logger.info("readLines called");
+        logger.info("ReadLines called by path " + filePath);
+
         List<String> lines = new ArrayList<>();
         try{
             Path path = Paths.get(filePath != null ? filePath : DEFAULTFILEPATH);
