@@ -1,18 +1,23 @@
 package by.azarkevich.task1.entity;
 
 import by.azarkevich.task1.exception.IntArrayException;
+import by.azarkevich.task1.observer.ArrayObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class IntArray {
     private static final Logger logger = LogManager.getLogger(IntArray.class);
 
     private long id;
     private int[] array;
+    private final List<ArrayObserver> observers = new ArrayList<>();
 
     public IntArray() {
+        this.array = new int[0];
         logger.info("IntArray created. Size: " + array.length);
     }
 
@@ -40,6 +45,7 @@ public class IntArray {
     public void setArray(int[] array) {
         logger.info("set array from IntArray called");
         this.array = array.clone();
+        notifyObservers();
     }
 
     public int size() {
@@ -57,12 +63,29 @@ public class IntArray {
     }
 
     public void set(int index, int value) throws IntArrayException {
-        logger.info("set index out of bounds in IntArray");
+        logger.info("set value by index in IntArray called");
         if(index < 0 || index >= array.length){
             logger.error("set index out of bounds in IntArray");
             throw new IntArrayException("Index out of array length");
         }
         array[index] = value;
+        notifyObservers();
+    }
+
+    public void attach(ArrayObserver observer) {
+        if (observer != null && !observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    public void detach(ArrayObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (ArrayObserver observer : observers) {
+            observer.update(this);
+        }
     }
 
     @Override
@@ -74,26 +97,20 @@ public class IntArray {
     @Override
     public int hashCode() {
         logger.info("hashCode from IntArray called");
-        final int salt = 12;
-        int prime = 27;
-        return prime * salt + Arrays.hashCode(array);
+        int result = Long.hashCode(id);
+        result = 31 * result + Arrays.hashCode(array);
+        return result;
     }
 
-    public boolean equals(IntArray array2) throws IntArrayException{
+    @Override
+    public boolean equals(Object obj) {
         logger.info("equals from IntArray called");
-        if(array2 == null || array2.size() == 0){
-            logger.error("Array length out of IntArray");
-            throw new IntArrayException("Arrau is null or empty");
+        if (this == obj) {
+            return true;
         }
-        if(array2.size() != this.array.length){
-            logger.error("Array length out of IntArray");
+        if (!(obj instanceof IntArray array2)) {
             return false;
         }
-        for(int i = 0; i < this.array.length; i++){
-            if(this.array[i] != array2.get(i)){
-                return false;
-            }
-        }
-        return true;
+        return id == array2.id && Arrays.equals(array, array2.array);
     }
 }
