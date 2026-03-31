@@ -1,4 +1,4 @@
-package by.azarkevich.task1.repository;
+package by.azarkevich.task1.warehouse;
 
 import by.azarkevich.task1.entity.ArrayParameters;
 import by.azarkevich.task1.entity.IntArray;
@@ -42,6 +42,11 @@ public class Warehouse implements ArrayObserver {
     public void remove(long id) {
         logger.info("remove() called for id {}", id);
         storage.remove(id);
+    }
+
+    public boolean removeAndCheck(long id) {
+        logger.info("removeAndCheck() called for id {}", id);
+        return storage.remove(id) != null;
     }
 
     @Override

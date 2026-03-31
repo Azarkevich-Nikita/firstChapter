@@ -2,7 +2,7 @@ package by.azarkevich.task1.specification.impl;
 
 import by.azarkevich.task1.entity.ArrayParameters;
 import by.azarkevich.task1.entity.IntArray;
-import by.azarkevich.task1.repository.Warehouse;
+import by.azarkevich.task1.warehouse.Warehouse;
 import by.azarkevich.task1.specification.Specification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

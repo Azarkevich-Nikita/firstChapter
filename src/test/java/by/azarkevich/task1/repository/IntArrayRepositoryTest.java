@@ -8,6 +8,7 @@ import by.azarkevich.task1.specification.impl.ArrayParameterSpecification;
 import by.azarkevich.task1.specification.impl.IdSpecification;
 import by.azarkevich.task1.specification.impl.ParameterOperation;
 import by.azarkevich.task1.specification.impl.ParameterType;
+import by.azarkevich.task1.warehouse.Warehouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,14 +69,14 @@ class IntArrayRepositoryTest {
         repository.add(second);
         repository.add(third);
 
-        repository.sort(IntArrayComparator.ID);
-        assertEquals(1L, repository.getAll().get(0).getId());
-        assertEquals(2L, repository.getAll().get(1).getId());
-        assertEquals(3L, repository.getAll().get(2).getId());
+        List<IntArray> byId = repository.sortToNewList(IntArrayComparator.BY_ID);
+        assertEquals(1L, byId.get(0).getId());
+        assertEquals(2L, byId.get(1).getId());
+        assertEquals(3L, byId.get(2).getId());
 
-        repository.sort(IntArrayComparator.FIRST_ELEMENT);
-        assertEquals(2L, repository.getAll().get(0).getId());
-        assertEquals(3L, repository.getAll().get(2).getId());
+        List<IntArray> byFirst = repository.sortToNewList(IntArrayComparator.BY_FIRST_ELEMENT);
+        assertEquals(1L, byFirst.get(0).getId());
+        assertEquals(3L, byFirst.get(2).getId());
     }
 
     @Test
